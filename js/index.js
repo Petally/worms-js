@@ -27,6 +27,9 @@ canvas.addEventListener('keydown', e => {
   if (e.keyCode === 77) {
     terrain.createTerrain();
   }
+  if (e.keyCode === 74) {
+    terrain.createGridPatternTerrain();
+  }
   if (e.keyCode === 87) {
     controls.up = true;
   }
