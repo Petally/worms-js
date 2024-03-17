@@ -1,6 +1,8 @@
 /* Main game file */
-const canvas = document.querySelector("#canvas");
-const ctx = canvas.getContext("2d");
+import { perlinNoise1D } from 'utils/perlinNoise1D.js';
+
+const canvas = document.querySelector('#canvas');
+const ctx = canvas.getContext('2d');
 
 const mapWidth = canvas.width;
 const mapHeight = canvas.height;
@@ -8,28 +10,25 @@ const mapHeight = canvas.height;
 let map = new Array(mapWidth * mapHeight).fill(0);
 
 let createMap = () => {
+  /* surface to be filled with heights */
+  const surface = new Array(mapWidth);
+  /* noiseSeed to be filled with noise values */
+  const noiseSeed = new Array(mapWidth);
 
-};
+  for (let i = 0; i < mapWidth; i++)
+    noiseSeed[i] = Math.random();
+  /* Set starting value of terrain to middle */
+  noiseSeed[0] = 0.5;
+  perlinNoise1D(mapWidth, noiseSeed, 8, 2, surface);
 
-/* 1D noise function that mutates the given output array */
-let perlinNoise1D = (count, seed, octaves, bias, output) => {
-  for (let x = 0; x < count; x++) {
-    let noise = 0;
-    let scaleAcc = 0;
-    let scale = 1;
-
-    for (let o = 0; o < octaves; o++) {
-      const pitch = count >> o;
-      const sample1 = (x / pitch) * pitch;
-      const sample2 = (sample1 + pitch) % count;
-      const let blend = (x - sample1) / pitch;
-      const sample = (1 - blend) * seed[sample1] + blend * seed[sample2];
-      scaleAcc += scale;
-      noise += sample * scale;
-      scale = scale / bias;
+  /* Convert 1d height map to 2d bitmap */
+  for (let x = 0; x < mapWidth; x++) {
+    for (let y = 0; y < mapHeight; y++) {
+      if (y >= surface[x] * mapHeight) {
+        map[y * mapWidth + x] = 1;
+      } else {
+        map[y * mapWidth + x] = 0;
+      }
     }
-
-    /* Scale to seed range */
-    output[x] = noise / scaleAcc;
   }
 };
