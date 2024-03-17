@@ -1,8 +1,6 @@
 /* Main game file */
 /* TODO:
- * Switch necessary variables to a Vector2 datatype
- * Fix timestep 
- * Refactor everything to be in its own neat module, etc */
+ * Fix timestep */ 
 import { Terrain } from './terrain/terrain.js';
 import { Camera } from './managers/camera.js';
 import { mapNumber, clamp } from './utils/mapNumber.js';
