@@ -1,7 +1,8 @@
 /* Main game file */
 /* TODO:
  * Switch necessary variables to a Vector2 datatype
- * Fix timestep */
+ * Fix timestep 
+ * Refactor everything to be in its own neat module, etc */
 import { CombineNoise, GenerateNoise } from './utils/perlinNoise1D.js';
 import { mapNumber, clamp } from './utils/mapNumber.js';
 
