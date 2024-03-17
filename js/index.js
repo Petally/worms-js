@@ -25,7 +25,7 @@ let controls = {
 canvas.addEventListener('keydown', e => {
   // M key
   if (e.keyCode === 77) {
-    createMap();
+    terrain.createTerrain();
   }
   if (e.keyCode === 87) {
     controls.up = true;
