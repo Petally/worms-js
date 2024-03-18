@@ -4,6 +4,7 @@
 import { Terrain } from './terrain/terrain.js';
 import { Camera } from './managers/camera.js';
 import { Mouse } from './managers/mouse.js';
+import { Dummy } from './classes/physicsObjects/dummy.js';
 import { mapNumber, clamp } from './utils/mapNumber.js';
 
 const canvas = document.querySelector('#canvas');
@@ -16,6 +17,7 @@ terrain.createTerrain();
 
 const camera = new Camera();
 const mouse = new Mouse(canvas);
+let physicsObjects = [];
 
 let controls = {
   up: false,
@@ -30,8 +32,13 @@ canvas.addEventListener('keydown', e => {
   if (e.keyCode === 77) {
     terrain.createTerrain();
   }
+  // J key
   if (e.keyCode === 74) {
     terrain.createGridPatternTerrain();
+  }
+  /* E key */
+  if (e.keyCode === 69) {
+    physicsObjects.push(new Dummy(mouse.position.x + Math.floor(camera.position.x), mouse.position.y + Math.floor(camera.position.y)));
   }
   if (e.keyCode === 87) {
     controls.up = true;
@@ -87,6 +94,19 @@ let update = () => {
   mouse.drawMouse(canvas, imageDataBuffer);
   /* put the image on the canvas */
   ctx.putImageData(imageData, 0, 0);
+
+  /* draw & update physics objects */
+  /* run 10 iterations per frame */
+  for (let z = 0; z < 10; z++) {
+    physicsObjects.forEach(p => {
+      p.update(terrain);
+    });
+  }
+  /* clean up dead physics objects */
+  physicsObjects = physicsObjects.filter(e => e.dead === false);
+  physicsObjects.forEach(p => {
+    p.drawObject(canvas, camera.position);
+  });
 
   requestAnimationFrame(update);
 };
