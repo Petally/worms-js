@@ -28,6 +28,14 @@ class Terrain {
     this.terrain = this.terrain.fill(0);
   }
 
+  index(x, y) {
+    return y * this.width + x;
+  }
+
+  set(x, y, input) {
+    this.terrain[this.index(x, y)] = input;
+  }
+
   /* Draws visible landscape on screen */
   /* Works with canvases of any size */
   drawTerrain(canvas, imageData, camera) {
@@ -38,7 +46,7 @@ class Terrain {
       for (let x = 0; x < width; x++) {
         const xPos = x + Math.floor(camera.position.x);
         const yPos = y + Math.floor(camera.position.y);
-        const i = yPos * this.width + xPos;
+        const i = this.index(xPos, yPos);
         const cell = this.terrain[i];
 
         /* render green for terrain, blue for sky */

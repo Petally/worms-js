@@ -3,6 +3,7 @@
  * Fix timestep */ 
 import { Terrain } from './terrain/terrain.js';
 import { Camera } from './managers/camera.js';
+import { Mouse } from './managers/mouse.js';
 import { mapNumber, clamp } from './utils/mapNumber.js';
 
 const canvas = document.querySelector('#canvas');
@@ -13,6 +14,7 @@ const terrain = new Terrain(1024, 512);
 terrain.createTerrain();
 
 const camera = new Camera();
+const mouse = new Mouse(canvas);
 
 let controls = {
   up: false,
@@ -61,6 +63,7 @@ canvas.addEventListener('keyup', e => {
 
 /* Main Loop */
 let update = () => {
+  /* Move camera with WASD */
   if (controls.up) {
     camera.velocity.y -= camera.acceleration;
   }
@@ -73,9 +76,14 @@ let update = () => {
   if (controls.right) {
     camera.velocity.x += camera.acceleration;
   }
+  /* Draw in terrain with mouse */
+  if (mouse.down) {
+    terrain.set(mouse.position.x + Math.floor(camera.position.x), mouse.position.y + Math.floor(camera.position.y), 1);
+  }
 
   camera.update(terrain, canvas);
   terrain.drawTerrain(canvas, canvasImageData, camera);
+  mouse.drawMouse(canvas, canvasImageData);
   /* put the image on the canvas */
   ctx.putImageData(canvasImageData, 0, 0);
 
