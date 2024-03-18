@@ -10,7 +10,7 @@ class Terrain {
   createTerrain() {
     /* surface to be filled with heights */
     /* 0 to 1 */
-    let surface = CombineNoise(GenerateNoise(128, 128, 8, 2, this.width));
+    let surface = CombineNoise(GenerateNoise(128, 128, 8, 8, this.width));
     /* Convert 1d height map to 2d bitmap */
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
