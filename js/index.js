@@ -8,7 +8,7 @@ import { mapNumber, clamp } from './utils/mapNumber.js';
 
 const canvas = document.querySelector('#canvas');
 const ctx = canvas.getContext('2d');
-const canvasImageData = ctx.createImageData(canvas.width, canvas.height);
+const imageData = ctx.createImageData(canvas.width, canvas.height);
 
 const terrain = new Terrain(1024, 512);
 terrain.createTerrain();
@@ -82,10 +82,10 @@ let update = () => {
   }
 
   camera.update(terrain, canvas);
-  terrain.drawTerrain(canvas, canvasImageData, camera);
-  mouse.drawMouse(canvas, canvasImageData);
+  terrain.drawTerrain(canvas, imageData, camera);
+  mouse.drawMouse(canvas, imageData);
   /* put the image on the canvas */
-  ctx.putImageData(canvasImageData, 0, 0);
+  ctx.putImageData(imageData, 0, 0);
 
   requestAnimationFrame(update);
 };
