@@ -38,10 +38,9 @@ class Terrain {
 
   /* Draws visible landscape on screen */
   /* Works with canvases of any size */
-  drawTerrain(canvas, imageData, camera) {
+  drawTerrain(canvas, imageDataBuffer, camera) {
     const width = canvas.width;
     const height = canvas.height;
-    let data = imageData.data;
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const xPos = x + Math.floor(camera.position.x);
@@ -50,12 +49,10 @@ class Terrain {
         const cell = this.terrain[i];
 
         /* render green for terrain, blue for sky */
-        const color = (cell === 0) ? [50, 50, 255] : [50, 200, 50];
-        const index = (y * width + x) * 4;
-        data[index + 0] = color[0];
-        data[index + 1] = color[1];
-        data[index + 2] = color[2];
-        data[index + 3] = 255;
+        /* Pixel data is in hex format, ABGR (rgba backwards, idk why) */
+        const color = (cell === 0) ? 0xFFFF4D4D: 0xFF32C832;
+        const index = y * width + x;
+        imageDataBuffer[index] = color;
       }
     }
   }

@@ -25,13 +25,9 @@ class Mouse {
   }
 
   /* Draw white dot for cursor */
-  drawMouse(canvas, imageData) {
-    const data = imageData.data;
-    const index = (this.position.y * canvas.width + this.position.x) * 4;
-    data[index + 0] = 255;
-    data[index + 1] = 255;
-    data[index + 2] = 255;
-    data[index + 3] = 255;
+  drawMouse(canvas, imageDataBuffer) {
+    const index = this.position.y * canvas.width + this.position.x;
+    imageDataBuffer[index] = 0xFFFFFFFF;
   }
 }
 
