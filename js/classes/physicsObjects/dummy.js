@@ -9,7 +9,7 @@ class Dummy extends PhysicsObject {
     const ctx = canvas.getContext('2d');
     /* Draw circle */
     ctx.fillStyle = '#FFF';
-    ctx.fillRect(this.position.x - offset.x, this.position.y - offset.y, this.radius/2, this.radius/2);
+    ctx.fillRect(this.position.x - offset.x, this.position.y - offset.y, this.radius, this.radius);
   }
 }
 
