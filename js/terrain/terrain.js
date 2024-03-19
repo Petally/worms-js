@@ -1,4 +1,5 @@
 import { CombineNoise, GenerateNoise } from '../generation/perlinNoise1D.js';
+import { drawBresenhamCircle } from '../utils/bresenham/drawBresenhamCircle.js'
 
 class Terrain {
   constructor(width, height) {
@@ -34,6 +35,12 @@ class Terrain {
 
   set(x, y, input) {
     this.terrain[this.index(x, y)] = input;
+  }
+
+  /* Expects only integer values */
+  explode(pos, radius) {
+    /* Errase terrain to form crater */
+    drawBresenhamCircle(Math.floor(pos.x), Math.floor(pos.y), radius, this.terrain, this.width, this.height, 0);
   }
 
   /* Draws visible landscape on screen */

@@ -4,7 +4,10 @@
 import { Terrain } from './terrain/terrain.js';
 import { Camera } from './managers/camera.js';
 import { Mouse } from './managers/mouse.js';
+
 import { Dummy } from './classes/physicsObjects/dummy.js';
+import { ImpactGrenade } from './classes/physicsObjects/impactGrenade.js';
+
 import { mapNumber, clamp } from './utils/mapNumber.js';
 
 const canvas = document.querySelector('#canvas');
@@ -39,6 +42,10 @@ canvas.addEventListener('keydown', e => {
   /* E key */
   if (e.keyCode === 69) {
     physicsObjects.push(new Dummy(mouse.position.x + Math.floor(camera.position.x), mouse.position.y + Math.floor(camera.position.y)));
+  }
+  /* B key */ 
+  if (e.keyCode === 66) {
+    physicsObjects.push(new ImpactGrenade(mouse.position.x + Math.floor(camera.position.x), mouse.position.y + Math.floor(camera.position.y)));
   }
   if (e.keyCode === 87) {
     controls.up = true;
